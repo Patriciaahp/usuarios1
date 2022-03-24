@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Users\Actions;
+namespace Domain\Shared;
 
 class ActionResponseCode
 {
