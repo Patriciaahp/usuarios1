@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Domain\Users\Users;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use InvalidArgumentException;
@@ -12,7 +13,8 @@ use App\Models\User;
 
 class StoreUserActionTest extends TestCase
 {
-
+    use RefreshDatabase;
+    use DatabaseMigrations;
     use WithFaker;
 
     /**
@@ -23,8 +25,8 @@ class StoreUserActionTest extends TestCase
      */
     public function domain_users_users_store_user_action_ok()
     {
-
         //TODO - Repasar
+
         $data = array(
             'name' => $this->faker->name,
             'surname' => $this->faker->name,
@@ -45,9 +47,10 @@ class StoreUserActionTest extends TestCase
 
         $this->assertEquals($user->name, $data['name']);
         $this->assertEquals($user->email, $data['email']);
+        $this->assertEquals($user->surname, $data['surname']);
         $user = new User();
         $response_fake = new ResponseCodeUserStored($user);
-        $this->assertTrue(gettype($response_fake) == gettype($result));
+        $this->assertTrue(get_class($response_fake) == get_class($result));
     }
 
     /**
@@ -58,8 +61,6 @@ class StoreUserActionTest extends TestCase
      */
     public function domain_users_users_store_user_action_no_name()
     {
-
-        //TODO - Programar el test del StoreUserAction sin name
         //$this->expectException(InvalidArgumentException::class);
 
         $data = array(
@@ -83,8 +84,6 @@ class StoreUserActionTest extends TestCase
      */
     public function domain_users_users_store_user_action_no_email()
     {
-
-        //TODO - Programar el test del StoreUserAction sin name
         //$this->expectException(InvalidArgumentException::class);
 
         $data = array(
@@ -100,5 +99,42 @@ class StoreUserActionTest extends TestCase
 
 
     }
+
+    /**
+     * A basic feature test example.
+     * @test
+     * Command for testing: vendor\bin\phpunit --filter=domain_users_users_store_user_action_no_surname
+     * @return void
+     */
+    public function domain_users_users_store_user_action_no_surname()
+    {
+        //$this->expectException(InvalidArgumentException::class);
+
+        $data = array(
+            'name' => $this->faker->name,
+            'email' => $this->faker->safeEmail,
+            'password' => 123456
+        );
+        $this->assertDatabaseCount('users', 0);
+    }
+
+    /**
+     * A basic feature test example.
+     * @test
+     * Command for testing: vendor\bin\phpunit --filter=domain_users_users_store_user_action_no_password
+     * @return void
+     */
+    public function domain_users_users_store_user_action_no_password()
+    {
+        //$this->expectException(InvalidArgumentException::class);
+
+        $data = array(
+            'name' => $this->faker->name,
+            'email' => $this->faker->safeEmail,
+           'surname' => $this->faker->name
+        );
+        $this->assertDatabaseCount('users', 0);
+    }
+
 
 }
