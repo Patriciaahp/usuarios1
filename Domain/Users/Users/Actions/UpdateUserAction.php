@@ -19,8 +19,8 @@ class UpdateUserAction
 
         $this->name = isset($data['name']) ? $data['name'] : $user['name'];
         $this->email = isset($data['email']) ? $data['email'] : $user['email'];
-        $this->surname = isset($data['surname']) ? $data ['surname'] : $user['surname'];
-        $this->password = isset($data['password']) ? $data ['password'] : $user['password'];
+        $this->surname = isset($data['surname']) ? $data['surname'] : $user['surname'];
+        $this->password = isset($data['password']) ? $data['password'] : $user['password'];
     }
 
     public function execute(User $user)
@@ -29,7 +29,7 @@ class UpdateUserAction
             'name' => $this->name,
             'surname' => $this->surname,
             'email' => $this->email,
-            'password' => $this->password
+            'password' => bcrypt($this->password)
         ]);
 
         $user->save();
