@@ -3,32 +3,37 @@
 namespace Domain\Users\Users\Actions;
 
 use App\Models\User;
-use Domain\Users\Users\ResponseCodes\ResponseCodeUserStored;
+use Domain\Users\Users\ResponseCodes\ResponseCodeUserUpdated;
 
 class UpdateUserAction
 {
-    public function __construct(array $data, User $user)
+    private $name;
+    private $email;
+    private $surname;
+    private $password;
+
+    public function __construct(User $user, array $data )
     {
         $this->data = $data;
         $this->user = $user;
 
         $this->name = isset($data['name']) ? $data['name'] : $user['name'];
-        $this->email = isset($data['email']) ? $data['email'] : ['email'];
+        $this->email = isset($data['email']) ? $data['email'] : $user['email'];
         $this->surname = isset($data['surname']) ? $data ['surname'] : $user['surname'];
-        $this->password = isset($data['password']) ? $data ['password'] : $user['name'];
+        $this->password = isset($data['password']) ? $data ['password'] : $user['password'];
     }
 
-    public function update(User $user)
+    public function execute(User $user)
     {
         $user->fill([
-            'name' => $this->data['name'],
+            'name' => $this->name,
             'surname' => $this->surname,
             'email' => $this->email,
-
+            'password' => $this->password
         ]);
 
         $user->save();
-        return new ResponseCodeUserStored($user);
+        return new ResponseCodeUserUpdated($user);
     }
 
 }
