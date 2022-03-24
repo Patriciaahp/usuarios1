@@ -303,9 +303,13 @@ class UpdateUserActionTest extends TestCase
             'email' => $data['email'],
 
         ]);
+    $credentials = [
+        'email' => $data['email'],
+        'password' => 22222
+    ];
 
-        Auth::login($user );
-        $this->assertAuthenticatedAs($user);
+        Auth::once($credentials);
+        $this->assertAuthenticated();
 
         $user = new User();
         $response_fake = new ResponseCodeUserUpdated($user);
