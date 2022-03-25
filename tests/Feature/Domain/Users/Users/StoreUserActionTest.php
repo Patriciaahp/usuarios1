@@ -5,6 +5,7 @@ namespace Tests\Feature\Domain\Users\Users;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Auth;
 use InvalidArgumentException;
 use Tests\TestCase;
 use Domain\Users\Users\Actions\StoreUserAction;
@@ -44,6 +45,14 @@ class StoreUserActionTest extends TestCase
         $this->assertDatabaseHas($user->getTable(), [
             'id' => $user->id
         ]);
+
+        $credentials = [
+            'email' => $data['email'],
+            'password' => 123456
+        ];
+
+        Auth::once($credentials);
+        $this->assertAuthenticated();
 
         $this->assertEquals($user->name, $data['name']);
         $this->assertEquals($user->email, $data['email']);
@@ -103,8 +112,6 @@ class StoreUserActionTest extends TestCase
         $user = $result->object;
 
         $this->assertNull($user);
-
-
     }
 
     /**
@@ -165,6 +172,5 @@ class StoreUserActionTest extends TestCase
         $response_fake = new ResponseCodeUserStored($user);
         $this->assertTrue(get_class($response_fake) == get_class($result));
     }
-//test pasando la password log con la password
 
 }
