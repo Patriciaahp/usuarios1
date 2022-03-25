@@ -69,9 +69,13 @@ class StoreUserActionTest extends TestCase
             'password' => 123456
         );
         $this->expectException(InvalidArgumentException::class);
+
         $action = new StoreUserAction($data);
+
         $result = $action->execute();
+
         $user = $result->object;
+
         $this->assertNull($user);
 
     }
@@ -84,7 +88,6 @@ class StoreUserActionTest extends TestCase
      */
     public function domain_users_users_store_user_action_no_email()
     {
-        //$this->expectException(InvalidArgumentException::class);
 
         $data = array(
             'name' => $this->faker->name,
@@ -92,9 +95,13 @@ class StoreUserActionTest extends TestCase
             'password' => 123456
         );
         $this->expectException(InvalidArgumentException::class);
+
         $action = new StoreUserAction($data);
+
         $result = $action->execute();
+
         $user = $result->object;
+
         $this->assertNull($user);
 
 
@@ -114,6 +121,7 @@ class StoreUserActionTest extends TestCase
             'password' => 123456
         );
         $action = new StoreUserAction($data);
+
         $result = $action->execute();
 
         $user = $result->object;
@@ -139,22 +147,23 @@ class StoreUserActionTest extends TestCase
      */
     public function domain_users_users_store_user_action_no_password()
     {
-        //$this->expectException(InvalidArgumentException::class);
-
         $data = array(
             'name' => $this->faker->name,
             'email' => $this->faker->safeEmail,
            'surname' => $this->faker->name
         );
 
-        $this->expectException(InvalidArgumentException::class);
         $action = new StoreUserAction($data);
         $result = $action->execute();
         $user = $result->object;
         $this->assertNotNull($user);
 
-
-        //crear el usuario
+        $this->assertEquals($user->name, $data['name']);
+        $this->assertEquals($user->email, $data['email']);
+        $this->assertEquals($user->surname, $data['surname']);
+        $user = new User();
+        $response_fake = new ResponseCodeUserStored($user);
+        $this->assertTrue(get_class($response_fake) == get_class($result));
     }
 //test pasando la password log con la password
 
