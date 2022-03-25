@@ -108,16 +108,27 @@ class StoreUserActionTest extends TestCase
      */
     public function domain_users_users_store_user_action_no_surname()
     {
-        //$this->expectException(InvalidArgumentException::class);
-
         $data = array(
             'name' => $this->faker->name,
             'email' => $this->faker->safeEmail,
             'password' => 123456
         );
-        $this->assertDatabaseCount('users', 0);
+        $action = new StoreUserAction($data);
+        $result = $action->execute();
 
-        //crear el usuario
+        $user = $result->object;
+
+        $this->assertNotNull($user);
+
+        $this->assertDatabaseHas($user->getTable(), [
+            'id' => $user->id
+        ]);
+
+        $this->assertEquals($user->name, $data['name']);
+        $this->assertEquals($user->email, $data['email']);
+        $user = new User();
+        $response_fake = new ResponseCodeUserStored($user);
+        $this->assertTrue(get_class($response_fake) == get_class($result));
     }
 
     /**
@@ -135,7 +146,13 @@ class StoreUserActionTest extends TestCase
             'email' => $this->faker->safeEmail,
            'surname' => $this->faker->name
         );
-        $this->assertDatabaseCount('users', 0);
+
+        $this->expectException(InvalidArgumentException::class);
+        $action = new StoreUserAction($data);
+        $result = $action->execute();
+        $user = $result->object;
+        $this->assertNotNull($user);
+
 
         //crear el usuario
     }
