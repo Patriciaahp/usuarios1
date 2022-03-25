@@ -3,6 +3,7 @@
 namespace Domain\Users\Users\Actions;
 
 use App\Models\User;
+use Domain\Users\Users\ResponseCodes\ResponseCodeUserDeleted;
 
 class DeleteUserAction
 {
@@ -15,7 +16,8 @@ class DeleteUserAction
 
     public function execute()
     {
-        $this->user->delete();
+        $this->user->forceDelete();
+        return new ResponseCodeUserDeleted();
     }
 
 }
