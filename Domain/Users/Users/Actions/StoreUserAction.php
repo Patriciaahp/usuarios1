@@ -15,6 +15,7 @@ class StoreUserAction
     private $email;
     private $surname;
     private $password;
+    private $user;
 
     public function __construct(array $data)
     {
@@ -36,14 +37,14 @@ class StoreUserAction
     public function execute()
     {
 
-        $user = User::create([
+        $this->user = User::create([
             'name' => $this->name,
             'surname' => $this->surname,
             'email' => $this->email,
             'password' => bcrypt($this->password)
         ]);
 
-        return new ResponseCodeUserStored($user);
+        return new ResponseCodeUserStored($this->user);
 
     }
 

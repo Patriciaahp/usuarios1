@@ -11,6 +11,7 @@ class UpdateUserAction
     private $email;
     private $surname;
     private $password;
+    private $user;
 
     public function __construct(User $user, array $data )
     {
@@ -22,18 +23,18 @@ class UpdateUserAction
         $this->surname = isset($data['surname']) ? $data['surname'] : $user['surname'];
         $this->password = isset($data['password']) ? $data['password'] : $user['password'];
     }
-
-    public function execute(User $user)
+//mirar password
+    public function execute()
     {
-        $user->fill([
+        $this->user->fill([
             'name' => $this->name,
             'surname' => $this->surname,
             'email' => $this->email,
             'password' => bcrypt($this->password)
         ]);
 
-        $user->save();
-        return new ResponseCodeUserUpdated($user);
+        $this->user->save();
+        return new ResponseCodeUserUpdated($this->user);
     }
 
 }

@@ -116,6 +116,8 @@ class StoreUserActionTest extends TestCase
             'password' => 123456
         );
         $this->assertDatabaseCount('users', 0);
+
+        //crear el usuario
     }
 
     /**
@@ -134,7 +136,9 @@ class StoreUserActionTest extends TestCase
            'surname' => $this->faker->name
         );
         $this->assertDatabaseCount('users', 0);
-    }
 
+        //crear el usuario
+    }
+//test pasando la password log con la password
 
 }
