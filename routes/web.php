@@ -19,3 +19,6 @@ Route::get('/', function () {
 Route::get('/user', function () {
     return view('users');
 });
+Route::get('/fields', function () {
+    return view('fields');
+});
