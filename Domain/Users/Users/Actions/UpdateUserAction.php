@@ -13,25 +13,33 @@ class UpdateUserAction
     private $password;
     private $user;
 
+
     public function __construct(User $user, array $data )
     {
+
         $this->data = $data;
         $this->user = $user;
 
         $this->name = isset($data['name']) ? $data['name'] : $user['name'];
         $this->email = isset($data['email']) ? $data['email'] : $user['email'];
         $this->surname = isset($data['surname']) ? $data['surname'] : $user['surname'];
-        $this->password = isset($data['password']) ? $data['password'] : $user['password'];
+        $this->password = isset($data['password']) ? $data['password'] : null;
     }
 //mirar password
     public function execute()
     {
-        $this->user->fill([
-            'name' => $this->name,
-            'surname' => $this->surname,
-            'email' => $this->email,
-            'password' => bcrypt($this->password)
-        ]);
+       $data = array(
+        'name'    => $this->name,
+        'surname' => $this->surname,
+        'email'   => $this->email
+    );
+
+    if($this->password){
+        $data['password'] = bcrypt($this->password);
+    }
+
+
+        $this->user->fill($data);
 
         $this->user->save();
         return new ResponseCodeUserUpdated($this->user);

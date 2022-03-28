@@ -37,8 +37,6 @@ class UpdateUserActionTest extends TestCase
 
         $user1 = $result->object;
 
-        $this->assertNotNull($user1);
-
         $data = array(
             'name' => 'hola',
             'surname' => 'adios',
@@ -85,8 +83,6 @@ class UpdateUserActionTest extends TestCase
         $result = $action->execute();
 
         $user1 = $result->object;
-
-        $this->assertNotNull($user1);
 
         $data = array(
 
@@ -135,8 +131,6 @@ class UpdateUserActionTest extends TestCase
 
         $user1 = $result->object;
 
-        $this->assertNotNull($user1);
-
         $data = array(
             'name' => 'hola',
             'surname' => 'adios',
@@ -182,8 +176,6 @@ class UpdateUserActionTest extends TestCase
         $result = $action->execute();
 
         $user1 = $result->object;
-
-        $this->assertNotNull($user1);
 
         $data = array(
             'name' => 'hola',
@@ -231,20 +223,17 @@ class UpdateUserActionTest extends TestCase
 
         $user1 = $result->object;
 
-        $this->assertNotNull($user1);
-
         $data = array(
             'name' => 'hola',
             'email' => 'hola@test',
-            'surname' => 'adios'
+            'surname' => 'adios',
+            'password' => ''
         );
 
         $action = new UpdateUserAction($user1, $data);
         $result = $action->execute($user1);
 
         $user = $result->object;
-
-        $this->assertNotNull($user);
 
         $this->assertDatabaseHas($user->getTable(), [
             'id' => $user->id,
@@ -284,8 +273,6 @@ class UpdateUserActionTest extends TestCase
         $result = $action->execute();
 
         $user1 = $result->object;
-
-        $this->assertNotNull($user1);
 
         $data = array(
             'name' => 'hola',

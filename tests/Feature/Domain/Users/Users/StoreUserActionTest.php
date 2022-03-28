@@ -83,10 +83,6 @@ class StoreUserActionTest extends TestCase
 
         $result = $action->execute();
 
-        $user = $result->object;
-
-        $this->assertNull($user);
-
     }
 
     /**
@@ -109,9 +105,6 @@ class StoreUserActionTest extends TestCase
 
         $result = $action->execute();
 
-        $user = $result->object;
-
-        $this->assertNull($user);
     }
 
     /**
