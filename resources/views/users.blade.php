@@ -8,7 +8,26 @@
     <title>User List</title>
 </head>
 <body>
-<h1>Hello, world!</h1>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<h1>User List</h1>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
+        <th scope="col">Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($users as $user)
+        <tr>
+        <th scope="row">{{$user->id}}</th>
+        <td>{{$user->name}}</td>
+        <td>{{$user->surname}}</td>
+        <td>{{$user->email}}</td>
+    </tr>
+    @endforeach
+    </tbody>
+</table>
 </body>
 </html>
